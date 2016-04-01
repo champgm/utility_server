@@ -11,7 +11,6 @@
   <modules>
     <module>server-console</module>
     <module>server-war</module>
-    <module>server-utilities</module>
     <module>server-common</module>
   </modules>
 

@@ -1,6 +1,7 @@
 package com.cgm.java.hue.web;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,9 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cgm.java.hue.web.util.KnownParameterNames;
-
-@WebServlet("/HueServlet")
+@WebServlet("/SendEmailServlet")
 public class SendEmailServlet extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(SendEmailServlet.class);
     private static final long serialVersionUID = 2L;
@@ -23,11 +22,16 @@ public class SendEmailServlet extends HttpServlet {
     }
 
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-        // Grab the input scene ID and retrieve that scene from the bridge
-        final String sceneId = request.getParameter(KnownParameterNames.SCENE_ID.getName());
-        LOGGER.info("Attempting to activate scene with ID: " + sceneId);
+        // Set response content type
+        response.setContentType("text/html");
 
-        // Return the scene
+        // Actual logic goes here.
+        final PrintWriter out = response.getWriter();
+        out.println("<h1>" + "It works?" + "</h1>");
+
+        final String radioButton = request.getParameter("recipient");
+        out.println("radioButton ::" + radioButton);
+
     }
 
     protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {

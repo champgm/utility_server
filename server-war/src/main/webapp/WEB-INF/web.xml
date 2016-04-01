@@ -3,7 +3,7 @@
          xmlns="http://xmlns.jcp.org/xml/ns/javaee"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1" id="hue-web" metadata-complete="true">
-  <display-name>hue-web</display-name>
+  <display-name>server-war</display-name>
   <welcome-file-list>
     <!--<welcome-file>index.html</welcome-file> -->
     <!--<welcome-file>index.htm</welcome-file> -->
@@ -17,5 +17,11 @@
     <servlet-name>SendEmailServlet</servlet-name>
     <servlet-class>com.cgm.java.hue.web.SendEmailServlet</servlet-class>
   </servlet>
+  <servlet-mapping>
+    <servlet-name>SendEmailServlet</servlet-name>
+    <url-pattern>/sendemail/*</url-pattern>
+  </servlet-mapping>
+
+
 
 </web-app>
