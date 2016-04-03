@@ -14,21 +14,19 @@ import org.apache.commons.lang.StringUtils;
 
 import com.cgm.java.console.commands.Command;
 import com.cgm.java.email.GMailSender;
+import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSet;
 
-/**
- * Created by mc023219 on 4/1/16.
- */
 public class SendEmailCommand extends Command {
 
     @Override
     protected int run(final CommandLine commandLine) throws Exception {
         final String configFile = commandLine.getOptionValue("configFile");
         final Properties emailProperties = initializeConfiguration(configFile);
-        final String userName = emailProperties.getProperty("username");
+        final Optional<String> userName = Optional.fromNullable(emailProperties.getProperty("username"));
 
         final String subject = commandLine.hasOption("subject") ? commandLine.getOptionValue("subject") : "";
         final String body = commandLine.hasOption("body") ? commandLine.getOptionValue("body") : "";
-
 
         if (!commandLine.hasOption("to")) {
             usage();
@@ -36,16 +34,9 @@ public class SendEmailCommand extends Command {
         }
         final String recipient = commandLine.getOptionValue("to");
 
-        System.out.println("Sender: " + userName);
-        System.out.println("Recipient: " + recipient);
-        System.out.println("Subject: " + subject);
-        System.out.println("Body: " + body);
-
-        GMailSender.sendGMail(emailProperties, userName, subject, body, recipient);
+        GMailSender.sendGMail(emailProperties, userName, subject, body, ImmutableSet.of(recipient));
         return 0;
     }
-
-
 
     @Override
     public String getName() {
