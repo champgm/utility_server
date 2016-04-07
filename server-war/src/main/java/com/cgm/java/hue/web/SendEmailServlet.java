@@ -57,6 +57,12 @@ public class SendEmailServlet extends HttpServlet {
                 Preconditions.checkState(!recipients.isEmpty(), "No addresses found in configuration.");
             } else {
                 final String recipientAddress = properties.getProperty(recipient);
+                if (recipientAddress == null) {
+                    printNFlush("Recipient not found: " + recipient + "<br>" + "Only found these: <br>", out);
+                    for (final Object o : properties.keySet()) {
+                        printNFlush(o.toString() + "<br>", out);
+                    }
+                }
                 Preconditions.checkNotNull(recipientAddress, "No addresses found in configuration for recipient, \"" + recipient + "\".");
                 recipients = ImmutableSet.of(recipientAddress);
 

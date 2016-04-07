@@ -21,12 +21,7 @@ import com.google.common.base.Preconditions;
 public class GMailSender {
     private static final Logger LOGGER = LoggerFactory.getLogger(GMailSender.class);
 
-    public static void sendGMail(
-            final Properties emailProperties,
-            final Optional<String> inputUserName,
-            final String subject,
-            final String body,
-            final Collection<String> recipients) {
+    public static void sendGMail(final Properties emailProperties, final Optional<String> inputUserName, final String subject, final String body, final Collection<String> recipients) {
         Preconditions.checkNotNull(emailProperties, "emailProperties may not be null.");
         Preconditions.checkNotNull(inputUserName, "userName may not be null.");
         Preconditions.checkNotNull(subject, "subject may not be null.");
