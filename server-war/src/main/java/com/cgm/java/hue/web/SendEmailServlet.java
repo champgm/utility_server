@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Properties;
 
 import javax.servlet.ServletException;
@@ -20,6 +21,7 @@ import com.cgm.java.email.GMailSender;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 
 @WebServlet("/SendEmailServlet")
 public class SendEmailServlet extends HttpServlet {
@@ -30,19 +32,21 @@ public class SendEmailServlet extends HttpServlet {
         super();
     }
 
-    protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         final PrintWriter out = response.getWriter();
         try {
             response.setContentType("text/html");
             printNFlush("<h1>" + "Sending an Email..." + "</h1>", out);
 
-            final String recipient = request.getParameter("recipient");
-            Preconditions.checkNotNull(recipient, "recipient must be specified.");
-            printNFlush("You selected, \"" + recipient + "\"<br>", out);
+            final String[] recipientToSend = request.getParameterValues("recipient");
+            Preconditions.checkNotNull(recipientToSend, "recipient must be specified.");
+            printNFlush("You selected, \"" + Arrays.asList(recipientToSend) + "\"<br>", out);
+            
+            System.out.println(Lists.newArrayList(recipientToSend));
 
             ImmutableSet<String> recipients;
             final Properties properties = initializeConfiguration();
-            if ("all".equalsIgnoreCase(recipient)) {
+            if (recipientToSend.length > 1 && "mac".equalsIgnoreCase(recipientToSend[0]) && "na".equalsIgnoreCase(recipientToSend[1])) {
                 final ImmutableSet.Builder<String> configuredAddressesBuilder = ImmutableSet.builder();
                 for (final Object keyObject : properties.keySet()) {
                     final String key = (String) keyObject;
@@ -56,17 +60,17 @@ public class SendEmailServlet extends HttpServlet {
                 recipients = configuredAddressesBuilder.build();
                 Preconditions.checkState(!recipients.isEmpty(), "No addresses found in configuration.");
             } else {
-                final String recipientAddress = properties.getProperty(recipient);
+                final String recipientAddress = properties.getProperty(recipientToSend[0]);
                 if (recipientAddress == null) {
-                    printNFlush("Recipient not found: " + recipient + "<br>" + "Only found these: <br>", out);
+                    printNFlush("Recipient not found: " + recipientToSend[0] + "<br>" + "Only found these: <br>", out);
                     for (final Object o : properties.keySet()) {
                         printNFlush(o.toString() + "<br>", out);
                     }
                 }
-                Preconditions.checkNotNull(recipientAddress, "No addresses found in configuration for recipient, \"" + recipient + "\".");
+                Preconditions.checkNotNull(recipientAddress, "No addresses found in configuration for recipient, \"" + recipientToSend[0] + "\".");
                 recipients = ImmutableSet.of(recipientAddress);
 
-                printNFlush("Found an address for, \"" + recipient + "\"<br>", out);
+                printNFlush("Found an address for, \"" + recipientToSend[0] + "\"<br>", out);
             }
 
             final String inputSubject = request.getParameter("subject");
@@ -92,8 +96,8 @@ public class SendEmailServlet extends HttpServlet {
         out.flush();
     }
 
-    protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
+    protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
+        doPost(request, response);
     }
 
     private Properties initializeConfiguration() {

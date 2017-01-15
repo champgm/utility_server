@@ -1,0 +1,113 @@
+body {
+	background-color: #f9f6ca;
+	font-family: 'Oxygen', sans-serif;
+}
+
+h1 {
+	margin-top: 5px;
+	margin-left: 0;
+	font-size: 2em;
+	color: #fff;
+	font-weight: bold;
+}
+
+#header-nav {
+	border: 0;
+	border-radius: 0;
+	background-color: #b58900;
+	height: 80px;
+}
+
+form .form-group {
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+div.form-group > label {
+	padding-top: 10px;
+	padding-bottom: 7px;
+	color: #b58900;
+	font-weight: bold;
+}
+
+div.btn-checkbox {
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+
+div.btn-checkbox .btn {
+	width: 100px;
+	padding: 10px;
+	background-color: #b58900;
+	margin: 10px 20px 10px 0;
+	box-shadow: 5px 5px 2px #888888;
+}
+
+div.btn-checkbox .btn:hover {
+	color: #fff;
+    background-color: #795548;
+}
+
+div.btn-checkbox .btn.active {
+  background-color: #7c5f20;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+#inputEmail {
+	margin-top: 10px;
+}
+
+.btn-checkbox span {
+	color: #fff;
+	margin-left: 5px;
+}
+
+#subject-div {
+	position: relative;
+}
+
+#body-div {
+	position: relative;
+}
+
+#text-clear-subject {
+	position: absolute;
+    right: 10px;
+    top: 40px;
+    bottom: 5px;
+    height: 14px;
+    margin: auto;
+    font-size: 20px;
+    cursor: pointer;
+    color: #ccc;
+}
+
+#text-clear-body {
+	position: absolute;
+	right: 10px;
+	top: 50px;
+	height: 14px;
+	font-size: 20px;
+	cursor: pointer;
+	color: #ccc;
+}
+
+
+.form-group input, .form-group textarea {
+	background-color: #e0e0e0;
+}
+
+#main-content #form .text-center button {
+	background-color: #b58900;
+	color: #fff;
+	box-shadow: 5px 5px 2px #888888;
+	margin: 20px 10px 50px 10px;
+	width: 90px;
+}
+
+#main-content #form .text-center .btn-default:hover {
+	color: #fff;
+    background-color: #795548;
+    border-color: #795548; 
+}
